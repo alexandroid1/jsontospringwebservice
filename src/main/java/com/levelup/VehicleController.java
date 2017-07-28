@@ -50,4 +50,17 @@ public class VehicleController {
         return new ResponseEntity<List<Car>>(cars, HttpStatus.OK);
     }
 
+    // Passing multiple json objects
+    @RequestMapping(value = "/carsandtrucks", method = RequestMethod.POST)
+    public ResponseEntity<RequestWrapper> updateWithMultipleObjects(
+            @RequestBody RequestWrapper requestWrapper) {
+
+        requestWrapper.getCars().stream()
+                .forEach(c -> c.setMiles(c.getMiles() + 100));
+
+        // TODO: call persistence layer to update
+
+        return new ResponseEntity<RequestWrapper>(requestWrapper, HttpStatus.OK);
+    }
+
 }
